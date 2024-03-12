@@ -1,0 +1,24 @@
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5vh;
+  /* height: 100vh;  */
+  /* Adjust as needed for your layout */
+}
+
+.login-form {
+  width: 50%;
+  text-align: center;
+}
+
+.input-box {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.submit-button {
+  margin-top: 10px;
+  align-items: center;
+}

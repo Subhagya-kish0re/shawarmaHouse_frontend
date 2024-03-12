@@ -1,0 +1,32 @@
+.menu-container {
+  padding: 20px;
+}
+
+.menu-item {
+  list-style: none;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.menu-item strong {
+  margin-right: 10px;
+}
+
+/* Add more custom styles as needed */
+/* src/components/MenuList.css */
+
+.order-summary-container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-summary-card {
+  /* Your styles for the order summary card */
+}
