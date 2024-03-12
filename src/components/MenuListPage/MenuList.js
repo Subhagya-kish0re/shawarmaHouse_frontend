@@ -1,6 +1,6 @@
 // src/components/MenuList.js
 import React, { useState, useEffect } from "react";
-import { ListGroup, Button, Container, Row, Col, Card } from "react-bootstrap";
+import { ListGroup, Button, Container, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./MenuList.css";
 import FixedNavbar from "../Navbar/Navbar";
