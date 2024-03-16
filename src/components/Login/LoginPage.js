@@ -43,6 +43,11 @@ const LoginPage = () => {
       );
 
       if (response.status === 201) {
+        const data = await response.json();
+        const userId = data.user_id;
+        localStorage.setItem("username", name);
+        localStorage.setItem("userId", userId);
+
         // Redirect to the menu page if the response status is created
         navigate("/menu");
       } else {
@@ -57,10 +62,12 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
+    <div className="bg">
       <FixedNavbar />
-      <div className="login-container">
-        <h1 className="App">Login Page</h1>
+      <div className="login-container ">
+        <h1 className="App">Welcome to The Shawarma House</h1>
+        <br></br>
+        <h3 className="App">Please Login Here </h3>
         {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={handleSubmit} className="login-form">
           <Form.Group controlId="formName">

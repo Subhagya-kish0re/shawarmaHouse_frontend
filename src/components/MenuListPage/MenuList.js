@@ -1,8 +1,8 @@
-// src/components/MenuList.js
 import React, { useState, useEffect } from "react";
-import { ListGroup, Button, Container, Col } from "react-bootstrap";
+import { ListGroup, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./MenuList.css";
+import "./MenuList.css"; // Import your custom styles
 import FixedNavbar from "../Navbar/Navbar";
 
 const MenuList = () => {
@@ -11,19 +11,16 @@ const MenuList = () => {
   const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
+    // Load items and quantities from local storage on component mount
+    const storedItems = JSON.parse(localStorage.getItem("cartItems")) || {};
+    setQuantities(storedItems);
+
     const fetchMenuItems = async () => {
       try {
         const response = await fetch(
           "https://shawarmahousebackend-production.up.railway.app/shawarmahouse/v1/getAllMenuItems"
         );
         const data = await response.json();
-
-        // Initialize quantities state with default values
-        const initialQuantities = {};
-        data.forEach((item) => {
-          initialQuantities[item.id] = 0;
-        });
-        setQuantities(initialQuantities);
 
         setMenuItems(data);
       } catch (error) {
@@ -34,88 +31,97 @@ const MenuList = () => {
     fetchMenuItems();
   }, []);
 
-  const handleAddToCart = (itemId) => {
-    setQuantities((prevQuantities) => ({
-      ...prevQuantities,
-      [itemId]: prevQuantities[itemId] + 1,
-    }));
-  };
-
-  const handleRemoveFromCart = (itemId) => {
-    if (quantities[itemId] > 0) {
-      setQuantities((prevQuantities) => ({
-        ...prevQuantities,
-        [itemId]: prevQuantities[itemId] - 1,
-      }));
-    }
-  };
-
   useEffect(() => {
     // Calculate total amount whenever quantities change
     let total = 0;
     menuItems.forEach((item) => {
-      total += item.price * quantities[item.id];
+      total += item.price * (quantities[item.item_id]?.quantity || 0); // Ensure item_id matches the API response
     });
     setTotalAmount(total);
+    localStorage.setItem("totalAmount", total.toString());
   }, [quantities, menuItems]);
 
-  const handlePlaceOrder = () => {
-    // Add your logic for placing the order here
-    console.log("Placing order:", quantities);
-    // You can make a server request to place the order or perform any other actions
+  const handleAddToCart = (itemId, itemName) => {
+    setQuantities((prevQuantities) => {
+      const newQuantities = {
+        ...prevQuantities,
+        [itemId]: {
+          name: itemName,
+          quantity: (prevQuantities[itemId]?.quantity || 0) + 1,
+        },
+      };
+
+      // Save items and quantities to local storage
+      localStorage.setItem("cartItems", JSON.stringify(newQuantities));
+
+      return newQuantities;
+    });
+  };
+
+  const handleRemoveFromCart = (itemId) => {
+    if (quantities[itemId]?.quantity > 0) {
+      setQuantities((prevQuantities) => {
+        const newQuantities = {
+          ...prevQuantities,
+          [itemId]: {
+            ...prevQuantities[itemId],
+            quantity: prevQuantities[itemId].quantity - 1,
+          },
+        };
+
+        // Save items and quantities to local storage
+        localStorage.setItem("cartItems", JSON.stringify(newQuantities));
+
+        return newQuantities;
+      });
+    }
   };
 
   return (
-    <div>
+    <div className="bg">
       <FixedNavbar />
       <div className="menu-container">
-        <h1>Menu Items</h1>
-        <ListGroup>
+        <h1 className="App">Menu Items</h1>
+        <ListGroup className="App">
           {menuItems.map((item) => (
-            <ListGroup.Item key={item.id} className="menu-item">
-              <strong>{item.name}</strong> - ${item.price}
+            <ListGroup.Item key={item.item_id} className="menu-item ">
+              <strong>{item.name}</strong> - ₹ {item.price}
               <div className="quantity-controls">
                 <Button
                   variant="primary"
-                  onClick={() => handleRemoveFromCart(item.id)}
+                  onClick={() => handleRemoveFromCart(item.item_id)} // Use item_id here
                   style={{ marginRight: "5px" }}
                 >
-                  -1
+                  -
                 </Button>
-                {quantities[item.id]} {/* Display the quantity */}
+                {quantities[item.item_id]?.quantity || 0}{" "}
+                {/* Correctly access the quantity property */}
                 <Button
                   variant="primary"
-                  onClick={() => handleAddToCart(item.id)}
+                  onClick={() => handleAddToCart(item.item_id, item.name)} // Pass item name here
                   style={{ marginLeft: "5px" }}
                 >
-                  +1
+                  +
                 </Button>
               </div>
             </ListGroup.Item>
           ))}
         </ListGroup>
-      </div>
 
-      {/* Order Summary */}
-      <Container>
-        <div className="order-summary-container">
-          <Col>
-            <div className="order-summary">
-              <h2>Order Summary</h2>
-              <p>Total Amount: ${totalAmount}</p>
-            </div>
-          </Col>
-          <Col>
-            <Button
-              variant="success"
-              className="place-order-button"
-              onClick={handlePlaceOrder}
-            >
-              Place Order
+        <div className="App">
+          {/* View Cart Button */}
+          <Link to="/cart">
+            <Button variant="success" style={{ marginTop: "10px" }}>
+              View Cart
             </Button>
-          </Col>
+          </Link>
+
+          {/* Display Total Amount */}
+          <div className="total-amount">
+            <p>Total Amount: ₹ {totalAmount}</p>
+          </div>
         </div>
-      </Container>
+      </div>
     </div>
   );
 };

@@ -1,0 +1,13 @@
+.bg {
+  background-image: url("../assests/cartpage.jpg");
+  color: rgb(39, 36, 36);
+}
+.main {
+  padding: 10vh 40vw 0 40vw;
+}
+.cart-item {
+  background-color: transparent;
+}
+.order {
+  display: flex;
+}
