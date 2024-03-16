@@ -62,7 +62,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="bg">
+    <div className="background">
       <FixedNavbar />
       <div className="login-container ">
         <h1 className="App">Welcome to The Shawarma House</h1>

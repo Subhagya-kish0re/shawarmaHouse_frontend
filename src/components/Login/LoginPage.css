@@ -17,8 +17,8 @@
   width: 100%;
   margin-bottom: 10px;
 }
-.bg {
-  background-image: url("../assests/bg1.jpg");
+.background {
+  background-image: url("../assests/loginbg.jpg");
   height: 100vh;
   color: rgb(93, 248, 235);
 }
