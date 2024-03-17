@@ -1,5 +1,5 @@
 .menu-container {
-  padding: 10vh 40vw 0 40vw;
+  padding: 10vh 30vw 0 30vw;
 }
 
 .menu-item {
@@ -31,5 +31,6 @@
 
 .bg {
   background-image: url("../assests/bgmenu.jpg");
-  height: 100vh;
+  min-height: 100vh;
+  min-width: 100vh;
 }

@@ -1,6 +1,8 @@
 .bg {
   background-image: url("../assests/cartpage.jpg");
   color: rgb(39, 36, 36);
+  min-height: 100vh;
+  min-width: 100vh;
 }
 .main {
   padding: 10vh 40vw 0 40vw;
@@ -10,4 +12,11 @@
 }
 .order {
   display: flex;
+}
+.flex {
+  display: flex;
+  /* height: 10vh; */
+}
+.menu-button {
+  margin-left: 5vw;
 }

@@ -43,18 +43,24 @@ const MenuList = () => {
 
   const handleAddToCart = (itemId, itemName) => {
     setQuantities((prevQuantities) => {
-      const newQuantities = {
-        ...prevQuantities,
-        [itemId]: {
-          name: itemName,
-          quantity: (prevQuantities[itemId]?.quantity || 0) + 1,
-        },
-      };
+      // Check if the item already exists in the cart and has a quantity greater than 0
+      if (prevQuantities[itemId]?.quantity > 0) {
+        const newQuantities = {
+          ...prevQuantities,
+          [itemId]: {
+            name: itemName,
+            quantity: prevQuantities[itemId].quantity + 1,
+          },
+        };
 
-      // Save items and quantities to local storage
-      localStorage.setItem("cartItems", JSON.stringify(newQuantities));
+        // Save items and quantities to local storage
+        localStorage.setItem("cartItems", JSON.stringify(newQuantities));
 
-      return newQuantities;
+        return newQuantities;
+      } else {
+        // If the item does not exist in the cart or has a quantity of 0, do not add it
+        return prevQuantities;
+      }
     });
   };
 
@@ -118,7 +124,7 @@ const MenuList = () => {
 
           {/* Display Total Amount */}
           <div className="total-amount">
-            <p>Total Amount: ₹ {totalAmount}</p>
+            <h2>Total Amount: ₹ {totalAmount}</h2>
           </div>
         </div>
       </div>
