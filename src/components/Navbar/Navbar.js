@@ -7,13 +7,13 @@ const FixedNavbar = () => {
   return (
     <Navbar bg="dark" variant="dark">
       <Navbar.Brand className="title" as={Link} to="/login">
-        <img
+        {/* <img
           src="../assests/5 (1).png" // Update this path to the actual path of your logo
           width="30" // Adjust the width as needed
           height="30" // Adjust the height as needed
           className="d-inline-block align-top" // Bootstrap classes for alignment
           alt="The Shawarma House Logo"
-        />
+        /> */}
         The Shawarma House
       </Navbar.Brand>
       <Nav className="mr-auto">
