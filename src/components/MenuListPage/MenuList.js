@@ -58,8 +58,18 @@ const MenuList = () => {
 
         return newQuantities;
       } else {
-        // If the item does not exist in the cart or has a quantity of 0, do not add it
-        return prevQuantities;
+        const newQuantities = {
+          ...prevQuantities,
+          [itemId]: {
+            name: itemName,
+            quantity: 1,
+          },
+        };
+
+        // Save items and quantities to local storage
+        localStorage.setItem("cartItems", JSON.stringify(newQuantities));
+
+        return newQuantities;
       }
     });
   };
