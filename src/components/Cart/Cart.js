@@ -86,7 +86,7 @@ const Cart = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:9090/shawarmahouse/v1/createOrder",
+        "https://shawarmahousebackend-production.up.railway.app/shawarmahouse/v1/createOrder",
         {
           method: "POST",
           headers: {
