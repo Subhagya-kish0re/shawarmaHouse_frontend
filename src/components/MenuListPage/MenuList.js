@@ -34,63 +34,62 @@ const MenuList = () => {
   useEffect(() => {
     // Calculate total amount whenever quantities change
     let total = 0;
-    menuItems.forEach((item) => {
-      total += item.price * (quantities[item.item_id]?.quantity || 0); // Ensure item_id matches the API response
+    Object.values(quantities).forEach((item) => {
+      if (item.quantity > 0) {
+        total += item.price * item.quantity;
+      }
     });
     setTotalAmount(total);
     localStorage.setItem("totalAmount", total.toString());
-  }, [quantities, menuItems]);
+  }, [quantities]);
 
-  const handleAddToCart = (itemId, itemName) => {
+  const handleAddToCart = (itemName, itemPrice) => {
     setQuantities((prevQuantities) => {
-      // Check if the item already exists in the cart and has a quantity greater than 0
-      if (prevQuantities[itemId]?.quantity > 0) {
-        const newQuantities = {
-          ...prevQuantities,
-          [itemId]: {
-            name: itemName,
-            quantity: prevQuantities[itemId].quantity + 1,
-          },
-        };
+      const newQuantities = {
+        ...prevQuantities,
+        [itemName]: {
+          price: itemPrice,
+          quantity: (prevQuantities[itemName]?.quantity || 0) + 1,
+        },
+      };
 
-        // Save items and quantities to local storage
-        localStorage.setItem("cartItems", JSON.stringify(newQuantities));
+      // Filter out items with quantity 0 before saving to localStorage
+      const filteredQuantities = Object.fromEntries(
+        Object.entries(newQuantities).filter(
+          ([key, value]) => value.quantity > 0
+        )
+      );
 
-        return newQuantities;
-      } else {
-        const newQuantities = {
-          ...prevQuantities,
-          [itemId]: {
-            name: itemName,
-            quantity: 1,
-          },
-        };
+      localStorage.setItem("cartItems", JSON.stringify(filteredQuantities));
 
-        // Save items and quantities to local storage
-        localStorage.setItem("cartItems", JSON.stringify(newQuantities));
-
-        return newQuantities;
-      }
+      return newQuantities;
     });
   };
 
-  const handleRemoveFromCart = (itemId) => {
-    if (quantities[itemId]?.quantity > 0) {
-      setQuantities((prevQuantities) => {
+  const handleRemoveFromCart = (itemName) => {
+    setQuantities((prevQuantities) => {
+      if (prevQuantities[itemName]?.quantity > 0) {
         const newQuantities = {
           ...prevQuantities,
-          [itemId]: {
-            ...prevQuantities[itemId],
-            quantity: prevQuantities[itemId].quantity - 1,
+          [itemName]: {
+            ...prevQuantities[itemName],
+            quantity: prevQuantities[itemName].quantity - 1,
           },
         };
 
-        // Save items and quantities to local storage
-        localStorage.setItem("cartItems", JSON.stringify(newQuantities));
+        // Filter out items with quantity 0 before saving to localStorage
+        const filteredQuantities = Object.fromEntries(
+          Object.entries(newQuantities).filter(
+            ([key, value]) => value.quantity > 0
+          )
+        );
+
+        localStorage.setItem("cartItems", JSON.stringify(filteredQuantities));
 
         return newQuantities;
-      });
-    }
+      }
+      return prevQuantities;
+    });
   };
 
   return (
@@ -105,16 +104,15 @@ const MenuList = () => {
               <div className="quantity-controls">
                 <Button
                   variant="primary"
-                  onClick={() => handleRemoveFromCart(item.item_id)} // Use item_id here
+                  onClick={() => handleRemoveFromCart(item.name)}
                   style={{ marginRight: "5px" }}
                 >
                   -
                 </Button>
-                {quantities[item.item_id]?.quantity || 0}{" "}
-                {/* Correctly access the quantity property */}
+                {quantities[item.name]?.quantity || 0}
                 <Button
                   variant="primary"
-                  onClick={() => handleAddToCart(item.item_id, item.name)} // Pass item name here
+                  onClick={() => handleAddToCart(item.name, item.price)}
                   style={{ marginLeft: "5px" }}
                 >
                   +
@@ -125,14 +123,12 @@ const MenuList = () => {
         </ListGroup>
 
         <div className="App">
-          {/* View Cart Button */}
           <Link to="/cart">
             <Button variant="success" style={{ marginTop: "10px" }}>
               View Cart
             </Button>
           </Link>
 
-          {/* Display Total Amount */}
           <div className="total-amount">
             <h2>Total Amount: ₹ {totalAmount}</h2>
           </div>

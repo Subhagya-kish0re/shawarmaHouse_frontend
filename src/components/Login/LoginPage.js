@@ -11,6 +11,8 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  localStorage.clear();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -47,6 +49,7 @@ const LoginPage = () => {
         const userId = data.user_id;
         localStorage.setItem("username", name);
         localStorage.setItem("userId", userId);
+        localStorage.setItem("phoneNumber", phoneNumber);
 
         // Redirect to the menu page if the response status is created
         navigate("/menu");

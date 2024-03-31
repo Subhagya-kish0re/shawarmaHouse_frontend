@@ -7,39 +7,56 @@ import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [totalAmount, setTotalAmount] = useState(0);
+  const [totalAmount, setTotalAmount] = useState();
   const [error, setError] = useState(null); // State to manage error messages
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   // Retrieve cart items from local storage
+  //   const storedItems = JSON.parse(localStorage.getItem("cartItems")) || {};
+  //   setCartItems(
+  //     Object.entries(storedItems).map(([itemId, { name, quantity }]) => ({
+  //       itemId,
+  //       name,
+  //       quantity,
+  //     }))
+  //   );
+  // }, []);
+
+  // useEffect(() => {
+  //   // Calculate total amount
+  //   const storedItems = JSON.parse(localStorage.getItem("cartItems")) || {};
+  //   setCartItems(
+  //     Object.entries(storedItems).map(([itemId, { name, quantity }]) => ({
+  //       itemId,
+  //       name,
+  //       quantity,
+  //     }))
+  //   );
+
+  //   // Retrieve total amount from local storage
+  //   const storedTotalAmount = localStorage.getItem("totalAmount");
+  //   if (storedTotalAmount) {
+  //     setTotalAmount(parseFloat(storedTotalAmount));
+  //   }
+  // }, []);
+  // const backToMenu = () => {
+  //   navigate("/menu");
+  // };
 
   useEffect(() => {
     // Retrieve cart items from local storage
     const storedItems = JSON.parse(localStorage.getItem("cartItems")) || {};
-    setCartItems(
-      Object.entries(storedItems).map(([itemId, { name, quantity }]) => ({
-        itemId,
-        name,
-        quantity,
-      }))
-    );
-  }, []);
+    setCartItems(storedItems);
 
-  useEffect(() => {
     // Calculate total amount
-    const storedItems = JSON.parse(localStorage.getItem("cartItems")) || {};
-    setCartItems(
-      Object.entries(storedItems).map(([itemId, { name, quantity }]) => ({
-        itemId,
-        name,
-        quantity,
-      }))
-    );
-
-    // Retrieve total amount from local storage
-    const storedTotalAmount = localStorage.getItem("totalAmount");
-    if (storedTotalAmount) {
-      setTotalAmount(parseFloat(storedTotalAmount));
-    }
+    let total = 0;
+    Object.values(storedItems).forEach((item) => {
+      total += item.price * item.quantity;
+    });
+    setTotalAmount(total);
   }, []);
+
   const backToMenu = () => {
     navigate("/menu");
   };
@@ -48,26 +65,28 @@ const Cart = () => {
     // Place order logic here
     const userId = localStorage.getItem("userId"); // Assuming userId is stored in local storage
     const userName = localStorage.getItem("username");
-    const itemsWithQuantity = cartItems.reduce((acc, { itemId, quantity }) => {
-      acc[itemId] = quantity;
-      return acc;
-    }, {});
-
-    const totalAmount = cartItems.reduce(
-      (acc, { quantity }) => acc + quantity,
-      0
+    const phoneNumber = localStorage.getItem("phoneNumber");
+    const itemsWithQuantity = Object.entries(cartItems).reduce(
+      (acc, [name, { price, quantity }]) => {
+        acc[name] = quantity; // Use item name as key
+        return acc;
+      },
+      {}
     );
+
+    const totalAmount = localStorage.getItem("totalAmount");
 
     const requestBody = {
       userId,
       userName,
+      phoneNumber,
       itemsWithQuantity,
       totalAmount,
     };
 
     try {
       const response = await fetch(
-        "https://shawarmahousebackend-production.up.railway.app/shawarmahouse/v1/createOrder",
+        "http://localhost:9090/shawarmahouse/v1/createOrder",
         {
           method: "POST",
           headers: {
@@ -102,20 +121,27 @@ const Cart = () => {
 
       <div className="main">
         <h2>Order Summary</h2>
-        <ListGroup>
+        {/* <ListGroup>
           {cartItems
             .filter((item) => item.quantity > 0)
             .map(({ itemId, name, quantity }) => (
               <ListGroup.Item key={itemId} className="cart-item">
-                {/* <Row>
-                  <Col>{name}</Col>
-                  <Col>{quantity}</Col>
-                </Row> */}
+                
                 <h5>
                   {name} {quantity}
                 </h5>
               </ListGroup.Item>
             ))}
+        </ListGroup> */}
+
+        <ListGroup>
+          {Object.entries(cartItems).map(([name, { price, quantity }]) => (
+            <ListGroup.Item key={name} className="cart-item">
+              <h5>
+                {name} x {quantity} - ₹ {price * quantity}
+              </h5>
+            </ListGroup.Item>
+          ))}
         </ListGroup>
 
         <br />
