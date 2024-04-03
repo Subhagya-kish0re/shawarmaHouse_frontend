@@ -28,6 +28,12 @@ const LoginPage = () => {
       return;
     }
 
+    // Special condition for Admin login
+    if (name === "Admin" && phoneNumber === "9898989898") {
+      navigate("/orders"); // Assuming "/orders" is the route for the orders page
+      return;
+    }
+
     // Make a POST request with the provided data
     try {
       const response = await fetch(

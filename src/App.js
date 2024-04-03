@@ -5,6 +5,7 @@ import MenuList from "./components/MenuListPage/MenuList";
 import LoginPage from "./components/Login/LoginPage";
 import Cart from "./components/Cart/Cart";
 import OrderDetails from "./components/OrderPage/OrderDetails";
+import OrdersPage from "./components/AdminViewOrders/OrdersPlaced";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/menu" element={<MenuList />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/orderplaced" element={<OrderDetails />} />
+          <Route path="/orders" element={<OrdersPage />} />
         </Routes>
       </Router>
     </div>
