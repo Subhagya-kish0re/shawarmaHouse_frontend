@@ -1,30 +1,73 @@
+/* LoginPage.css */
+
+/* Define your theme colors */
+:root {
+  --theme-orange: #ffa500; /* Orange color */
+  --theme-white: #ffffff; /* White color */
+}
+
+.background {
+  /* background-image: url("../assests/loginbg.jpg"); */
+  background-image: url("../assests/bg-login.jpg");
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--theme-white); /* Use white for text */
+}
+
 .login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 5vh;
-  /* height: 100vh;  */
-  /* Adjust as needed for your layout */
+  width: 100%;
+  max-width: 400px; /* Adjust as needed */
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+  border-radius: 10px;
+  color: var(--theme-orange); /* Use orange for text */
 }
 
 .login-form {
-  width: 50%;
-  text-align: center;
+  width: 100%;
 }
 
 .input-box {
   width: 100%;
   margin-bottom: 10px;
-}
-.background {
-  background-image: url("../assests/loginbg.jpg");
-  min-height: 100vh;
-  min-width: 100vh;
-  color: rgb(93, 248, 235);
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--theme-orange); /* Orange border */
+  background-color: var(--theme-white); /* White background */
 }
 
 .submit-button {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--theme-orange); /* Orange background */
+  color: var(--theme-white); /* White text */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
   margin-top: 10px;
-  align-items: center;
+}
+
+.submit-button:hover {
+  background-color: #ff8c00; /* Darker orange on hover */
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .login-container {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    padding: 5px;
+  }
 }

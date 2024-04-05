@@ -1,6 +1,5 @@
 // src/pages/LoginPage.js
 import React, { useState } from "react";
-import { Form, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 import FixedNavbar from "../Navbar/Navbar";
@@ -71,46 +70,54 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="background">
+    <div>
       <FixedNavbar />
-      <div className="login-container ">
-        <h1 className="App">Welcome to The Shawarma House</h1>
-        <br></br>
-        <h3 className="App">Please Login Here </h3>
-        {error && <Alert variant="danger">{error}</Alert>}
-        <Form onSubmit={handleSubmit} className="login-form">
-          <Form.Group controlId="formName">
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              className="input-box"
-              type="text"
-              placeholder="Enter your name"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-                setError(""); // Clear the error when the name is modified
-              }}
-            />
-          </Form.Group>
+      <div className="background">
+        <div className="login-container">
+          <h1 className="App">Welcome to Seven Shawarma</h1>
+          <br />
+          <h3>Please Login Here</h3>
+          {error && <div className="alert alert-danger">{error}</div>}
+          <form
+            onSubmit={handleSubmit}
+            className="login-form"
+            aria-label="Login Form"
+          >
+            <div className="form-group">
+              <label htmlFor="formName">Name</label>
+              <input
+                className="input-box"
+                type="text"
+                placeholder="Enter your name"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  setError(""); // Clear the error when the name is modified
+                }}
+                aria-required="true"
+              />
+            </div>
 
-          <Form.Group controlId="formPhoneNumber">
-            <Form.Label>Phone Number</Form.Label>
-            <Form.Control
-              className="input-box"
-              type="text"
-              placeholder="Enter your phone number"
-              value={phoneNumber}
-              onChange={(e) => {
-                setPhoneNumber(e.target.value);
-                setError(""); // Clear the error when the phone number is modified
-              }}
-            />
-          </Form.Group>
+            <div className="form-group">
+              <label htmlFor="formPhoneNumber">Phone Number</label>
+              <input
+                className="input-box"
+                type="text"
+                placeholder="Enter your phone number"
+                value={phoneNumber}
+                onChange={(e) => {
+                  setPhoneNumber(e.target.value);
+                  setError(""); // Clear the error when the phone number is modified
+                }}
+                aria-required="true"
+              />
+            </div>
 
-          <Button className="submit-button" variant="primary" type="submit">
-            Login
-          </Button>
-        </Form>
+            <button className="submit-button" type="submit">
+              Login
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
