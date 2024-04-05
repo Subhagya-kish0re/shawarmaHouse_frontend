@@ -1,26 +1,56 @@
 /* MenuList.css */
 
+:root {
+  --theme-orange: #ffa500; /* Orange color */
+  --theme-white: #ffffff; /* White color */
+  --theme-gray: #f0f0f0; /* Light gray color */
+  --theme-dark-gray: #333; /* Dark gray color */
+}
+
 .bg {
-  background-color: #f8f8f8; /* Light grey background */
+  background-image: url("../assests/menu-bg.jpg");
+  background-size: cover; /* Cover the entire container */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  min-height: 100vh; /* Ensure the container covers the full viewport height */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--theme-white); /* Use white as the background */
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .menu-container {
   max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
   padding: 20px;
+  background-color: var(--theme-white);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .App {
-  color: #333; /* Dark grey text */
+  color: var(--theme-orange); /* Use orange for text */
   font-family: "Roboto", sans-serif; /* Example font */
+  margin-bottom: 20px;
 }
 
 .menu-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+  padding: 15px;
+  border-bottom: 1px solid var(--theme-gray);
+  transition: background-color 0.3s ease;
+}
+
+.menu-item:hover {
+  background-color: var(--theme-gray);
 }
 
 .quantity-controls {
@@ -28,7 +58,35 @@
   align-items: center;
 }
 
+.quantity-controls button {
+  background-color: var(--theme-orange);
+  color: var(--theme-white);
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.quantity-controls button:hover {
+  background-color: #ff8c00; /* Darker orange on hover */
+}
+
 .total-amount {
   margin-top: 20px;
   text-align: right;
+  color: var(--theme-dark-gray);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .menu-container {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-container {
+    padding: 5px;
+  }
 }

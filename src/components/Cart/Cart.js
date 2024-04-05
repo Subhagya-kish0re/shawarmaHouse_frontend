@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { ListGroup, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import FixedNavbar from "../Navbar/Navbar";
 import "./cart.css";
@@ -10,39 +9,6 @@ const Cart = () => {
   const [totalAmount, setTotalAmount] = useState();
   const [error, setError] = useState(null); // State to manage error messages
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   // Retrieve cart items from local storage
-  //   const storedItems = JSON.parse(localStorage.getItem("cartItems")) || {};
-  //   setCartItems(
-  //     Object.entries(storedItems).map(([itemId, { name, quantity }]) => ({
-  //       itemId,
-  //       name,
-  //       quantity,
-  //     }))
-  //   );
-  // }, []);
-
-  // useEffect(() => {
-  //   // Calculate total amount
-  //   const storedItems = JSON.parse(localStorage.getItem("cartItems")) || {};
-  //   setCartItems(
-  //     Object.entries(storedItems).map(([itemId, { name, quantity }]) => ({
-  //       itemId,
-  //       name,
-  //       quantity,
-  //     }))
-  //   );
-
-  //   // Retrieve total amount from local storage
-  //   const storedTotalAmount = localStorage.getItem("totalAmount");
-  //   if (storedTotalAmount) {
-  //     setTotalAmount(parseFloat(storedTotalAmount));
-  //   }
-  // }, []);
-  // const backToMenu = () => {
-  //   navigate("/menu");
-  // };
 
   useEffect(() => {
     // Retrieve cart items from local storage
@@ -116,54 +82,35 @@ const Cart = () => {
   };
 
   return (
-    <div className="bg App">
+    <div>
       <FixedNavbar />
 
-      <div className="main">
-        <h2>Order Summary</h2>
-        {/* <ListGroup>
-          {cartItems
-            .filter((item) => item.quantity > 0)
-            .map(({ itemId, name, quantity }) => (
-              <ListGroup.Item key={itemId} className="cart-item">
-                
+      <div className="cart-container">
+        <div className="cart-content">
+          <h2>Order Summary</h2>
+
+          <div className="cart-items">
+            {Object.entries(cartItems).map(([name, { price, quantity }]) => (
+              <div key={name} className="cart-item">
                 <h5>
-                  {name} {quantity}
+                  {name} x {quantity} - ₹ {price * quantity}
                 </h5>
-              </ListGroup.Item>
+              </div>
             ))}
-        </ListGroup> */}
+          </div>
 
-        <ListGroup>
-          {Object.entries(cartItems).map(([name, { price, quantity }]) => (
-            <ListGroup.Item key={name} className="cart-item">
-              <h5>
-                {name} x {quantity} - ₹ {price * quantity}
-              </h5>
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
-
-        <br />
-        <br></br>
-        <div>
-          <div cl>
+          <div className="cart-summary">
             <h3>Total Amount: ₹ {totalAmount}</h3>
+            <div className="cart-buttons">
+              <button className="place-order-btn" onClick={handlePlaceOrder}>
+                Place Order
+              </button>
+              <button className="back-to-menu-btn" onClick={backToMenu}>
+                Back to Menu
+              </button>
+            </div>
+            {error && <p className="error-message">{error}</p>}
           </div>
-          <div className="flex">
-            <Button variant="danger" onClick={handlePlaceOrder}>
-              Place Order
-            </Button>
-            <Button
-              className="menu-button"
-              variant="secondary"
-              onClick={backToMenu}
-            >
-              Back to Menu
-            </Button>
-          </div>
-          {error && <p className="error-message">{error}</p>}{" "}
-          {/* Display error message */}
         </div>
       </div>
     </div>
