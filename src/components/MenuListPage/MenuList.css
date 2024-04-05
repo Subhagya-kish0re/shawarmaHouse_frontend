@@ -1,5 +1,3 @@
-/* MenuList.css */
-
 :root {
   --theme-orange: #ffa500; /* Orange color */
   --theme-white: #ffffff; /* White color */
@@ -79,13 +77,47 @@
 }
 
 /* Responsive design */
-@media (max-width: 768px) {
+@media only screen and (max-width: 768px) {
   .menu-container {
     padding: 10px;
+    width: 90%;
+  }
+
+  .menu-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .quantity-controls {
+    margin-top: 10px;
+  }
+
+  .quantity-controls button {
+    margin-right: 5px;
+  }
+
+  .total-amount {
+    text-align: center;
+  }
+
+  body {
+    font-size: 14px;
+  }
+
+  .menu-item {
+    padding: 10px;
+  }
+
+  .quantity-controls button {
+    padding: 5px 10px;
+  }
+
+  .total-amount h2 {
+    font-size: 16px;
   }
 }
 
-@media (max-width: 480px) {
+@media only screen and (max-width: 480px) {
   .menu-container {
     padding: 5px;
   }

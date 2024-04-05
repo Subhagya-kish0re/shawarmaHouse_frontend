@@ -113,8 +113,8 @@ const MenuList = () => {
       <FixedNavbar />
 
       <div className="bg">
+        <h1 className="App">Menu Items</h1>
         <div className="menu-container">
-          <h1 className="App">Menu Items</h1>
           <div className="menu-container">
             {menuItems.map((item, index) => {
               // Check if the category has changed to render a heading

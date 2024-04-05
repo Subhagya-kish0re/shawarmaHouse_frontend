@@ -1,14 +1,25 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+// import Modal from "./Modal.js";
 import FixedNavbar from "../Navbar/Navbar";
 import "./cart.css";
 import { useNavigate } from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState();
-  const [error, setError] = useState(null); // State to manage error messages
+  const [error, setError] = useState(null);
+  const [coupon, setCoupon] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedCoupon] = useState(null);
+
   const navigate = useNavigate();
+
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
 
   useEffect(() => {
     // Retrieve cart items from local storage
@@ -22,6 +33,23 @@ const Cart = () => {
     });
     setTotalAmount(total);
   }, []);
+
+  const handleCouponSelect = (couponCode) => {
+    if (couponCode === "welcome") {
+      if (coupon === "welcome") {
+        // If the coupon is already selected, deselect it
+        setCoupon(null);
+        setTotalAmount(totalAmount * 2); // Remove the 50% discount
+      } else {
+        // If the coupon is not selected, select it and apply the discount
+        setCoupon(couponCode);
+        setTotalAmount(totalAmount * 0.5); // Apply 50% discount
+      }
+      setShowModal(false); // Close the modal
+    } else {
+      setError("Invalid coupon code.");
+    }
+  };
 
   const backToMenu = () => {
     navigate("/menu");
@@ -84,32 +112,69 @@ const Cart = () => {
   return (
     <div>
       <FixedNavbar />
+      <div className="cart-bg">
+        <div className="cart-container">
+          <div className="cart-content">
+            <h2>Order Summary</h2>
 
-      <div className="cart-container">
-        <div className="cart-content">
-          <h2>Order Summary</h2>
-
-          <div className="cart-items">
-            {Object.entries(cartItems).map(([name, { price, quantity }]) => (
-              <div key={name} className="cart-item">
-                <h5>
-                  {name} x {quantity} - ₹ {price * quantity}
-                </h5>
-              </div>
-            ))}
-          </div>
-
-          <div className="cart-summary">
-            <h3>Total Amount: ₹ {totalAmount}</h3>
-            <div className="cart-buttons">
-              <button className="place-order-btn" onClick={handlePlaceOrder}>
-                Place Order
-              </button>
-              <button className="back-to-menu-btn" onClick={backToMenu}>
-                Back to Menu
-              </button>
+            <div className="cart-items">
+              {Object.entries(cartItems).map(([name, { price, quantity }]) => (
+                <div key={name} className="cart-item">
+                  <h5>
+                    {name} x {quantity} - ₹ {price * quantity}
+                  </h5>
+                </div>
+              ))}
             </div>
-            {error && <p className="error-message">{error}</p>}
+
+            {/* Apply Coupons Button */}
+            {/* <button onClick={() => setIsModalOpen(true)}>Apply Coupons</button> */}
+
+            {/* Cart Items and Total Amount Display */}
+            {/* Your existing cart items and total amount display */}
+
+            {/* Place Order and Back to Menu Buttons */}
+            {/* Your existing buttons */}
+
+            {/* Modal for Coupon Selection */}
+            <Button variant="primary" onClick={handleShow}>
+              Apply Coupons
+            </Button>
+
+            <Modal show={showModal} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>Coupons</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <h4>Select Coupons</h4>
+                <Form.Check
+                  type="radio"
+                  label="Welcome"
+                  name="coupon"
+                  checked={selectedCoupon === "welcome"}
+                  onChange={() => handleCouponSelect("welcome")}
+                />
+                {/* Add more coupons as needed */}
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Close
+                </Button>
+              </Modal.Footer>
+            </Modal>
+
+            <div className="cart-summary">
+              <h3>Total Amount: ₹ {totalAmount}</h3>
+              <div className="cart-buttons">
+                <button className="place-order-btn" onClick={handlePlaceOrder}>
+                  Place Order
+                </button>
+                <button className="back-to-menu-btn" onClick={backToMenu}>
+                  Back to Menu
+                </button>
+              </div>
+              {error && <p className="error-message">{error}</p>}
+            </div>
           </div>
         </div>
       </div>

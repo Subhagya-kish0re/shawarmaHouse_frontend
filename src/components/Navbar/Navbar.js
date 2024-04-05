@@ -14,7 +14,7 @@ const FixedNavbar = () => {
           className="d-inline-block align-top" // Bootstrap classes for alignment
           alt="The Shawarma House Logo"
         /> */}
-        The Shawarma House
+        Seven Shawarma
       </Navbar.Brand>
       <Nav className="mr-auto">
         {/* <Nav.Link as={Link} to="/menu">
