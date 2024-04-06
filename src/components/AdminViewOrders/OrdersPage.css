@@ -1,0 +1,54 @@
+.orders-page {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.orders-table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.orders-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.orders-table th,
+.orders-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.orders-table th {
+  background-color: #f2f2f2;
+  color: black;
+}
+
+.orders-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.orders-table tr:hover {
+  background-color: #ddd;
+}
+
+.orders-table button {
+  background-color: #4caf50;
+  color: white;
+  padding: 5px 10px;
+  margin: 5px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.orders-table .danger {
+  background-color: #f44336;
+}
+
+.orders-table select {
+  width: 100%;
+  padding: 5px;
+  margin: 5px 0;
+}
