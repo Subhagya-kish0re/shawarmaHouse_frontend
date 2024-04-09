@@ -1,6 +1,5 @@
 import React from "react";
 import FixedNavbar from "../Navbar/Navbar";
-import ParticlesEffect from "./ParticlesEffect";
 import FogComponent from "../Animations/FogComponent";
 
 const OrderDetails = () => {
