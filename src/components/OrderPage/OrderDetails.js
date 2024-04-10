@@ -1,6 +1,6 @@
 import React from "react";
 import FixedNavbar from "../Navbar/Navbar";
-import FogComponent from "../Animations/FogComponent";
+import RingsEffect from "../Animations/RingComponent";
 
 const OrderDetails = () => {
   const orderDetails = JSON.parse(localStorage.getItem("orderResponse"));
@@ -12,8 +12,8 @@ const OrderDetails = () => {
   return (
     <div>
       <FixedNavbar />
-      <FogComponent>
-        {/* <ParticlesEffect /> */}
+      {/* <ParticlesEffect /> */}
+      <RingsEffect>
         <div className="App">
           <h1>Thank You.</h1>
           <p>
@@ -21,7 +21,7 @@ const OrderDetails = () => {
             {orderDetails.id}.
           </p>
         </div>
-      </FogComponent>
+      </RingsEffect>
     </div>
   );
 };
