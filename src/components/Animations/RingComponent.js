@@ -9,20 +9,26 @@ class RingsEffect extends Component {
   }
 
   componentDidMount() {
-    this.vantaEffect = RINGS({
+    // Function to check if the device is a mobile device
+    const isMobile = () => window.innerWidth <= 768;
+
+    // Adjusting properties based on device type
+    const adjustedProperties = {
       el: this.vantaRef.current,
       THREE: THREE,
       mouseControls: true,
       touchControls: true,
       gyroControls: false,
-      minHeight: 200.0,
-      minWidth: 200.0,
+      minHeight: isMobile() ? 100.0 : 200.0,
+      minWidth: isMobile() ? 100.0 : 200.0,
       color: 0xffffff,
       backgroundColor: 0x000000,
-      points: 15,
-      maxDistance: 20,
-      spacing: 10,
-    });
+      points: isMobile() ? 10 : 15,
+      maxDistance: isMobile() ? 10 : 20,
+      spacing: isMobile() ? 5 : 10,
+    };
+
+    this.vantaEffect = RINGS(adjustedProperties);
   }
 
   componentWillUnmount() {
@@ -31,7 +37,10 @@ class RingsEffect extends Component {
 
   render() {
     return (
-      <div style={{ height: "100vh", width: "100%" }} ref={this.vantaRef}>
+      <div
+        style={{ height: "100vh", width: "100%", position: "relative" }}
+        ref={this.vantaRef}
+      >
         {this.props.children}
       </div>
     );
