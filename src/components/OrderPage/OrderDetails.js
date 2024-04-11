@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import FixedNavbar from "../Navbar/Navbar";
 import RingsEffect from "../Animations/RingComponent";
 
 const OrderDetails = () => {
   const orderDetails = JSON.parse(localStorage.getItem("orderResponse"));
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (!orderDetails) {
     return <div>Loading order details...</div>;

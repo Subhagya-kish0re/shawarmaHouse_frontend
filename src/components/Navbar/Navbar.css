@@ -1,3 +1,37 @@
-.title {
-  padding-left: 2vw;
+/* Navbar.css */
+@import url("https://fonts.googleapis.com/css2?family=Caslon+Antique&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Mercury+Display&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kis+Text&display=swap");
+
+.navbar {
+  background-color: red; /* Primary color */
+  color: white; /* Secondary color */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  font-family: "Mercury Display", sans-serif; /* Use Mercury Display as the primary font */
+}
+
+.navbar-brand {
+  font-size: 24px; /* Adjust font size as needed */
+  font-weight: bold; /* Make the text bold */
+  color: white; /* Ensure the text color is white */
+  text-decoration: none; /* Remove underline from links */
+}
+
+.navbar-brand:hover {
+  color: white; /* Ensure the text color remains white on hover */
+}
+
+/* Optional: Add styles for the nav links */
+.nav-link {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  font-family: "Caslon Antique", serif; /* Use Caslon Antique for links */
+}
+
+.nav-link:hover {
+  color: #ccc; /* Adjust hover color as needed */
 }

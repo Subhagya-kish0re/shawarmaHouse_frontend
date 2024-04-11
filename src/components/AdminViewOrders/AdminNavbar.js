@@ -14,7 +14,7 @@ const AdminNavbar = () => {
           className="d-inline-block align-top" // Bootstrap classes for alignment
           alt="The Shawarma House Logo"
         /> */}
-        Seven Shawarma
+        The Shawarma Hub
       </Navbar.Brand>
       <Nav className="mr-auto nav">
         {/* <Nav.Link as={Link} to="/menu">
