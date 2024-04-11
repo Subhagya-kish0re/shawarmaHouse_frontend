@@ -20,6 +20,9 @@ const Cart = () => {
 
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     // Retrieve cart items from local storage

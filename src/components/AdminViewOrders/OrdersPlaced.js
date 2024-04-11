@@ -31,7 +31,7 @@ const OrdersPage = () => {
     fetchOrders();
 
     // Set up an interval to fetch orders every 5 seconds (5000 milliseconds)
-    const intervalId = setInterval(fetchOrders, 4000);
+    const intervalId = setInterval(fetchOrders, 2500);
 
     // Cleanup function to clear the interval when the component unmounts
     return () => clearInterval(intervalId);
