@@ -3,10 +3,36 @@
   --theme-white: #ffffff; /* White color */
   --theme-gray: #f0f0f0; /* Light gray color */
   --theme-dark-gray: #333; /* Dark gray color */
+  --theme-blue:rgb(118, 110, 228);
+  --theme-black:var(#0a0a0a);
+}
+
+body {
+  font-family: "Roboto", sans-serif; /* Example font */
+  background-color: var(--theme-white); /* Use white as the background */
+  color: var(--theme-dark-gray); /* Use dark gray for text */
+}
+
+/* Navbar styles */
+.navbar {
+  background-color: var(--theme-orange);
+  color: var(--theme-white);
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.navbar h1 {
+  font-size: 24px;
 }
 
 .bg {
-  background-image: url("../assests/menu\ \(2\).png");
+  background-image: url("../assests/menu-1.jpg");
   background-size: cover; /* Cover the entire container */
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Prevent the image from repeating */
@@ -16,11 +42,7 @@
   flex-direction: column;
   align-items: center;
   background-color: var(--theme-white); /* Use white as the background */
-  min-height: 100vh;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin-top: 60px; /* Add margin to accommodate the fixed navbar */
 }
 
 .menu-container {
@@ -34,7 +56,6 @@
 
 .App {
   color: var(--theme-orange); /* Use orange for text */
-  font-family: "Roboto", sans-serif; /* Example font */
   margin-bottom: 20px;
 }
 
@@ -74,6 +95,24 @@
   margin-top: 20px;
   text-align: right;
   color: var(--theme-dark-gray);
+}
+
+.view-cart-button {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  background-color: var(--theme-orange);
+  color: var(--theme-white);
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.view-cart-button:hover {
+  background-color: #e06a17;
 }
 
 /* Responsive design */

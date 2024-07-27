@@ -17,7 +17,7 @@ const MenuList = () => {
     const fetchMenuItems = async () => {
       try {
         const response = await fetch(
-          "https://shawarmahousebackend-production.up.railway.app/shawarmahouse/v1/getAllMenuItems"
+          "https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/getAllMenuItems"
         );
         const data = await response.json();
 
@@ -109,91 +109,65 @@ const MenuList = () => {
   };
 
   return (
-    <div>
+<div>
       <FixedNavbar />
 
       <div className="bg">
-        <h1 className="App">Menu Items</h1>
+        <h1 className="App" >Menu Items</h1>
         <div className="menu-container">
-          <div className="menu-container">
-            {menuItems.map((item, index) => {
-              // Check if the category has changed to render a heading
-              if (
-                index === 0 ||
-                menuItems[index - 1].category !== item.category
-              ) {
-                return (
-                  <div key={item.category}>
-                    <h2>{item.category}</h2> {/* Render the category heading */}
-                    <div key={item.item_id} className="menu-item">
-                      <div>
-                        <strong>{item.name}</strong> - ₹ {item.price}
-                        <p>{item.description}</p>{" "}
-                        {/* Render the description here */}
-                      </div>
-                      <div className="quantity-controls">
-                        <button
-                          onClick={() => handleRemoveFromCart(item.name)}
-                          style={{ marginRight: "5px" }}
-                        >
-                          -
-                        </button>
-                        {quantities[item.name]?.quantity || 0}
-                        <button
-                          onClick={() => handleAddToCart(item.name, item.price)}
-                          style={{ marginLeft: "5px" }}
-                        >
-                          +
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                );
-              } else {
-                return (
+          {menuItems.map((item, index) => {
+            if (index === 0 || menuItems[index - 1].category !== item.category) {
+              return (
+                <div key={item.category}>
+                  <h2>{item.category}</h2>
                   <div key={item.item_id} className="menu-item">
                     <div>
                       <strong>{item.name}</strong> - ₹ {item.price}
-                      <p>{item.description}</p>{" "}
-                      {/* Render the description here */}
+                      <p>{item.description}</p>
                     </div>
                     <div className="quantity-controls">
-                      <button
-                        onClick={() => handleRemoveFromCart(item.name)}
-                        style={{ marginRight: "5px" }}
-                      >
+                      <button onClick={() => handleRemoveFromCart(item.name)} style={{ marginRight: "5px" }}>
                         -
                       </button>
                       {quantities[item.name]?.quantity || 0}
-                      <button
-                        onClick={() => handleAddToCart(item.name, item.price)}
-                        style={{ marginLeft: "5px" }}
-                      >
+                      <button onClick={() => handleAddToCart(item.name, item.price)} style={{ marginLeft: "5px" }}>
                         +
                       </button>
                     </div>
                   </div>
-                );
-              }
-            })}
-          </div>
+                </div>
+              );
+            } else {
+              return (
+                <div key={item.item_id} className="menu-item">
+                  <div>
+                    <strong>{item.name}</strong> - ₹ {item.price}
+                    <p>{item.description}</p>
+                  </div>
+                  <div className="quantity-controls">
+                    <button onClick={() => handleRemoveFromCart(item.name)} style={{ marginRight: "5px" }}>
+                      -
+                    </button>
+                    {quantities[item.name]?.quantity || 0}
+                    <button onClick={() => handleAddToCart(item.name, item.price)} style={{ marginLeft: "5px" }}>
+                      +
+                    </button>
+                  </div>
+                </div>
+              );
+            }
+          })}
+        </div>
 
-          <div className="App">
-            <Link to="/cart">
-              <button
-                style={{
-                  marginTop: "10px",
-                  backgroundColor: "var(--theme-orange)",
-                  color: "var(--theme-white)",
-                }}
-              >
-                View Cart
-              </button>
-            </Link>
+        <div className="App">
+          <Link to="/cart">
+            <button className="view-cart-button" style={{ backgroundColor: "var(--theme-blue)", color: "var(--theme-black)" }}>
+              View Cart
+            </button>
+          </Link>
 
-            <div className="total-amount">
-              <h2>Total Amount: ₹ {totalAmount}</h2>
-            </div>
+          <div className="total-amount">
+            <h2>Total Amount: ₹ {totalAmount}</h2>
           </div>
         </div>
       </div>

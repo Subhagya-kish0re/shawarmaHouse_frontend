@@ -36,7 +36,7 @@ const LoginPage = () => {
     // Make a POST request with the provided data
     try {
       const response = await fetch(
-        "https://shawarmahousebackend-production.up.railway.app/shawarmahouse/v1/createUser",
+        "https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/createUser",
         {
           method: "POST",
           headers: {

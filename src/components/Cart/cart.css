@@ -1,21 +1,39 @@
-/* CSS Reset */
+:root {
+  --theme-orange: #ff5722; /* Orange color */
+  --theme-white: #ffffff; /* White color */
+  --theme-gray: #f0f0f0; /* Light gray color */
+  --theme-dark-gray: #333; /* Dark gray color */
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* General Styling */
 body {
   font-family: "Arial", sans-serif;
   background-color: #f8f8f8;
 }
 
+.cart-bg {
+  background-image: url("../assests/2080886.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
 .cart-container {
   padding: 20px;
-  background-color: #fff;
+  background-color: var(--theme-white);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin: 20px auto;
+  border-radius: 10px;
+  width: 100%;
   max-width: 600px;
 }
 
@@ -29,7 +47,7 @@ body {
 
 .cart-item {
   padding: 10px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--theme-gray);
 }
 
 .cart-summary {
@@ -42,6 +60,7 @@ body {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
+  width: 100%;
 }
 
 .place-order-btn,
@@ -51,21 +70,22 @@ body {
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+  background-color: var(--theme-orange);
+  color: var(--theme-white);
+  transition: background-color 0.3s ease;
+  margin: 5px;
+  width: 48%;
 }
 
-.place-order-btn {
-  background-color: #ff5722;
-  color: #fff;
-}
-
-.back-to-menu-btn {
-  background-color: #f44336;
-  color: #fff;
+.place-order-btn:hover,
+.back-to-menu-btn:hover {
+  background-color: #e64a19;
 }
 
 .error-message {
-  color: #f44336;
+  color: var(--theme-dark-gray);
   margin-top: 10px;
+  font-size: 14px;
 }
 
 /* Responsive Design */
@@ -85,7 +105,7 @@ body {
 
   .cart-item {
     padding: 5px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--theme-gray);
   }
 
   .cart-summary {
@@ -103,11 +123,6 @@ body {
   .back-to-menu-btn {
     width: 100%;
     margin-bottom: 10px;
-  }
-
-  .modal-content {
-    width: 90%;
-    max-width: 90%;
   }
 
   body {
@@ -142,8 +157,8 @@ body {
 }
 
 .modal-content {
-  background: white;
-  width: 45rem;
+  background: var(--theme-white);
+  width: 90%;
   max-width: calc(100vw - 2rem);
   max-height: calc(100vh - 2rem);
   overflow-y: auto;
@@ -156,8 +171,8 @@ body {
 
 /* Style the coupon button */
 button {
-  background-color: #ff5722;
-  color: #fff;
+  background-color: var(--theme-orange);
+  color: var(--theme-white);
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
@@ -171,7 +186,6 @@ button:hover {
   background-color: #e64a19;
 }
 
-/* Error message styling */
 .error-message {
   color: #f44336;
   margin-top: 10px;
@@ -184,22 +198,4 @@ button:hover {
 
 .select-coupons h4 {
   margin-bottom: 10px;
-}
-
-.cart-bg {
-  background-image: url("../assests/cart-bg.jpeg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  min-height: 100vh;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--theme-white);
-  min-height: 100vh;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
