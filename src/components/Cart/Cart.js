@@ -91,7 +91,7 @@ const Cart = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:9090/shawarmahouse/v1/createOrder",
+        "https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/createOrder",
         {
           method: "POST",
           headers: {
@@ -107,7 +107,7 @@ const Cart = () => {
         localStorage.setItem("orderResponse", JSON.stringify(data));
 
         // Update tokens after order placement
-        fetch(`http://localhost:9090/shawarmahouse/v1/update?phoneNumber=${phoneNumber}&token=${newTokens}`, {
+        fetch(`https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/update?phoneNumber=${phoneNumber}&token=${newTokens}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
