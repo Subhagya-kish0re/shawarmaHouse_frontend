@@ -7,7 +7,7 @@
   background-color: red; /* Primary color */
   color: white; /* Secondary color */
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   padding: 10px 0;
   font-family: "Mercury Display", sans-serif; /* Use Mercury Display as the primary font */
@@ -34,4 +34,14 @@
 
 .nav-link:hover {
   color: #ccc; /* Adjust hover color as needed */
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
+/* Adjust the icon size and spacing */
+.nav-link .faUser {
+  margin-right: 10px;
 }

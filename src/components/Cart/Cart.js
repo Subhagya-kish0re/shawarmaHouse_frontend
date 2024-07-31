@@ -14,7 +14,6 @@ const Cart = () => {
 
   const navigate = useNavigate();
 
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -46,8 +45,6 @@ const Cart = () => {
       });
   }, []);
 
-
-
   const handleUseTokensChange = () => {
     setUseTokens(!useTokens);
     if (!useTokens) {
@@ -74,11 +71,38 @@ const Cart = () => {
     );
 
     let finalAmount = totalAmount;
+    let newTokens = 0;
+
     if (useTokens && tokens > 0) {
       finalAmount -= tokens;
-      setTokens(0);
+      newTokens = Math.floor(finalAmount * 0.1);
+    } else {
+      newTokens = Math.floor(totalAmount * 0.1) + tokens;
     }
-    const newTokens = Math.floor(finalAmount * 0.1);
+
+    const updateTokenURL = `https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/update?phoneNumber=${phoneNumber}&token=${newTokens}`;
+
+    // Update tokens before placing the order
+    try {
+      const updateResponse = await fetch(updateTokenURL, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!updateResponse.ok) {
+        console.error("Failed to update tokens:", updateResponse.statusText);
+        setError("Failed to update tokens: " + updateResponse.statusText);
+        return;
+      } else {
+        console.log("Tokens updated successfully");
+      }
+    } catch (updateError) {
+      console.error("Error updating tokens:", updateError);
+      setError("Error updating tokens. Please try again.");
+      return;
+    }
 
     const requestBody = {
       userId,
@@ -105,25 +129,6 @@ const Cart = () => {
         const data = await response.json();
         console.log("Order placed successfully:", data);
         localStorage.setItem("orderResponse", JSON.stringify(data));
-
-        // Update tokens after order placement
-        fetch(`https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/update?phoneNumber=${phoneNumber}&token=${newTokens}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-        .then((updateResponse) => {
-          if (updateResponse.ok) {
-            console.log("Tokens updated successfully");
-          } else {
-            console.error("Failed to update tokens:", updateResponse.statusText);
-          }
-        })
-        .catch((updateError) => {
-          console.error("Error updating tokens:", updateError);
-        });
-
         navigate("/orderplaced", { state: { orderDetails: data } });
       } else {
         console.error("Failed to place order:", response.statusText);
@@ -152,8 +157,6 @@ const Cart = () => {
                 </div>
               ))}
             </div>
-
-          
 
             <div className="cart-summary">
               <h3>Total Amount: ₹ {totalAmount}</h3>

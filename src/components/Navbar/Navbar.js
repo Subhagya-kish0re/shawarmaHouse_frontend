@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { faUser, faBars } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Navbar.css";
 
 const FixedNavbar = () => {
@@ -9,10 +11,12 @@ const FixedNavbar = () => {
         The Shawarma Hub
       </Link>
       <div className="nav-links">
-        {/* Uncomment and adjust the links as needed */}
-        {/* <Link className="nav-link" to="/menu">Menu</Link> */}
-        {/* <Link className="nav-link" to="/login">Login</Link> */}
-        {/* Add more links as needed */}
+      <Link className="nav-link" to="/menu">
+          <FontAwesomeIcon icon={faBars} size="lg" />
+        </Link>
+        <Link className="nav-link" to="/profile">
+          <FontAwesomeIcon icon={faUser} size="lg" />
+        </Link>
       </div>
     </nav>
   );
