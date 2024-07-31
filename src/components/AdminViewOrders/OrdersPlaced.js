@@ -12,7 +12,7 @@ const OrdersPage = () => {
   const fetchOrders = async () => {
     try {
       const response = await fetch(
-        "https://shawarmahousebackend-production.up.railway.app/shawarmahouse/v1/status"
+        "https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/status"
       );
       if (!response.ok) {
         throw new Error("Failed to fetch orders");
@@ -46,7 +46,7 @@ const OrdersPage = () => {
 
     try {
       const response = await fetch(
-        "https://shawarmahousebackend-production.up.railway.app/shawarmahouse/v1/updateOrderStatus",
+        "https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/updateOrderStatus",
         requestOptions
       );
       if (!response.ok) {
@@ -65,7 +65,7 @@ const OrdersPage = () => {
   const removeOrder = async (orderId) => {
     try {
       const response = await fetch(
-        `https://shawarmahousebackend-production.up.railway.app/shawarmahouse/v1/removeOrder/${orderId}`,
+        `https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/removeOrder/${orderId}`,
         {
           method: "DELETE",
         }
