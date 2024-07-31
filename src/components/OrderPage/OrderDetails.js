@@ -40,7 +40,6 @@ const OrderDetails = () => {
     <div className="home">
       <FixedNavbar />
 
-      <Dia
       <div className="App">
         <Link to="/menu">
           <FontAwesomeIcon icon={faHome} size="2x" />
