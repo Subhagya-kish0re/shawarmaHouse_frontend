@@ -7,6 +7,7 @@ import Cart from "./components/Cart/Cart";
 import OrderDetails from "./components/OrderPage/OrderDetails";
 import OrdersPage from "./components/AdminViewOrders/OrdersPlaced";
 import ProfilePage from "./components/ProfilePage/ProfilePage ";
+import OrderHistory from "./components/OrderHistory/OrderHistory";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/orderplaced" element={<OrderDetails />} />
           <Route path="/orders" element={<OrdersPage />} />
           <Route path="/profile" element={<ProfilePage/>} />
+          <Route path="/order-history" element={<OrderHistory />} />
         </Routes>
       </Router>
     </div>

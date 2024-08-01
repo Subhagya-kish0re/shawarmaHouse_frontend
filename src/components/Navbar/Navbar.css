@@ -9,7 +9,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
+  padding: 10px 20px;
   font-family: "Mercury Display", sans-serif; /* Use Mercury Display as the primary font */
 }
 
@@ -24,24 +24,17 @@
   color: white; /* Ensure the text color remains white on hover */
 }
 
-/* Optional: Add styles for the nav links */
-.nav-link {
-  color: white;
-  margin-left: 20px;
-  text-decoration: none;
-  font-family: "Caslon Antique", serif; /* Use Caslon Antique for links */
-}
-
-.nav-link:hover {
-  color: #ccc; /* Adjust hover color as needed */
-}
-
-.nav-links {
+.nav-icons {
   display: flex;
   align-items: center;
 }
 
-/* Adjust the icon size and spacing */
-.nav-link .faUser {
-  margin-right: 10px;
+.nav-icon {
+  color: white;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.nav-icon:hover {
+  color: #ccc; /* Adjust hover color as needed */
 }

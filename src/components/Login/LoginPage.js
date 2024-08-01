@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
-import FixedNavbar from "../Navbar/Navbar";
+import SimpleNavbar from "../Navbar/SimpleNavbar";
 
 const LoginPage = () => {
   const [name, setName] = useState("");
@@ -71,7 +71,7 @@ const LoginPage = () => {
 
   return (
     <div>
-      <FixedNavbar />
+      <SimpleNavbar />
       <div className="background">
         <div className="login-container">
           <h1 className="App">Welcome to Seven Shawarma</h1>

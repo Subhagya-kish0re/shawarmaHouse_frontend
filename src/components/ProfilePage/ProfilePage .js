@@ -1,76 +1,72 @@
 import React, { useState, useEffect } from "react";
-import "./ProfilePage.css";
 import FixedNavbar from "../Navbar/Navbar";
+import "../ProfilePage/ProfilePage.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const ProfilePage = () => {
-  const [userDetails, setUserDetails] = useState({
-    name: "",
-    phone: "",
-    tokens: 0,
-  });
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const phoneNumber = localStorage.getItem("phoneNumber");
-    fetch(
-      `https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/findbynumber?number=${phoneNumber}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setUserDetails(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching user details:", error);
-        setError("Error fetching user details. Please try again.");
+    const [userDetails, setUserDetails] = useState({
+        name: "",
+        phone: "",
+        tokens: 0,
       });
-  }, []);
-
-  const handleNameChange = (e) => {
-    setUserDetails((prevState) => ({
-      ...prevState,
-      name: e.target.value,
-    }));
-  };
-
-  const handleSave = () => {
-    if (!userDetails.name) {
-      setError("Name cannot be empty");
-      return;
-    }
-
-    // Update user details in the backend
-    fetch(
-      `https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/update`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: userDetails.user_id,
-          name: userDetails.name,
-          phone: userDetails.phone,
-          tokens: userDetails.tokens,
-        }),
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("User details updated:", data);
-        setError(null);
-      })
-      .catch((error) => {
-        console.error("Error updating user details:", error);
-        setError("Error updating user details. Please try again.");
-      });
-  };
-
+      const [error, setError] = useState(null);
+      const [successMessage, setSuccessMessage] = useState("");
+    
+      useEffect(() => {
+        const phoneNumber = localStorage.getItem("phoneNumber");
+        if (phoneNumber) {
+          fetch(`https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/findbynumber?number=${phoneNumber}`)
+            .then((response) => response.json())
+            .then((data) => {
+              setUserDetails({
+                name: data.name,
+                phone: data.phone,
+                tokens: data.tokens,
+              });
+            })
+            .catch((error) => {
+              console.error("Error fetching user details:", error);
+              setError("Error fetching user details.");
+            });
+        }
+      }, []);
+    
+      const handleNameChange = (e) => {
+        setUserDetails({ ...userDetails, name: e.target.value });
+      };
+    
+      const handleSave = () => {
+        const { name, phone } = userDetails;
+    
+        fetch(`https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/updateName?username=${name}&phoneNumber=${phone}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => {
+            if (response.ok) {
+              console.log("Name updated successfully");
+              setSuccessMessage("Name changed successfully!");
+              setTimeout(() => {
+                setSuccessMessage("");
+              }, 3000); // Hide the message after 3 seconds
+            } else {
+              throw new Error("Failed to update name");
+            }
+          })
+          .catch((error) => {
+            console.error("Error updating name:", error);
+            setError("Error updating name. Please try again.");
+          });
+      };
   return (
     <div>
       <FixedNavbar />
       <div className="profile-container">
         <h2>Profile</h2>
         {error && <p className="error-message">{error}</p>}
+        {successMessage && <p className="success-message">{successMessage}</p>}
         <div className="profile-field">
           <label>Name:</label>
           <input

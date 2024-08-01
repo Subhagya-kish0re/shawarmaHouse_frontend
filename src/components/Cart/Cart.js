@@ -75,9 +75,9 @@ const Cart = () => {
 
     if (useTokens && tokens > 0) {
       finalAmount -= tokens;
-      newTokens = Math.floor(finalAmount * 0.1);
+      newTokens = (finalAmount * 0.1);
     } else {
-      newTokens = Math.floor(totalAmount * 0.1) + tokens;
+      newTokens = (totalAmount * 0.1) + tokens;
     }
 
     const updateTokenURL = `https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/update?phoneNumber=${phoneNumber}&token=${newTokens}`;

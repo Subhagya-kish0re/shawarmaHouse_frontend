@@ -161,7 +161,7 @@ const MenuList = () => {
 
         <div className="App">
           <Link to="/cart">
-            <button className="view-cart-button" style={{ backgroundColor: "var(--theme-blue)", color: "var(--theme-black)" }}>
+            <button className="view-cart-button" style={{ backgroundColor: "var(--theme-dark-gray)", color: "var(--theme-black)" }}>
               View Cart
             </button>
           </Link>
