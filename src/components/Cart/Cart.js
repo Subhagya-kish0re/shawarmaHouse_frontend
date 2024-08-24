@@ -46,17 +46,12 @@ const Cart = () => {
   }, []);
 
   const handleUseTokensChange = () => {
-    setUseTokens((prevUseTokens) => {
-      if (!prevUseTokens) {
-        setTotalAmount((prevTotal) => {
-          const newTotal = Math.max(0, prevTotal - tokens);
-          return newTotal;
-        });
-      } else {
-        setTotalAmount((prevTotal) => prevTotal + tokens);
-      }
-      return !prevUseTokens;
-    });
+    setUseTokens(!useTokens);
+    if (!useTokens) {
+      setTotalAmount((prevTotal) => prevTotal - tokens);
+    } else {
+      setTotalAmount((prevTotal) => prevTotal + tokens);
+    }
   };
 
   const backToMenu = () => {
@@ -76,23 +71,18 @@ const Cart = () => {
     );
 
     let finalAmount = totalAmount;
-    let newTokens = tokens;
+    let newTokens = 0;
 
     if (useTokens && tokens > 0) {
-      if (tokens >= totalAmount) {
-        finalAmount = 0;
-        newTokens = tokens - totalAmount; // Subtract totalAmount from tokens
-      } else {
-        finalAmount = totalAmount - tokens;
-        newTokens = 0; // All tokens are used
-      }
+      finalAmount -= tokens;
+      newTokens = (finalAmount * 0.1);
     } else {
-      // If tokens are not used or insufficient to cover the total amount, earn new tokens
-      newTokens = tokens + finalAmount * 0.1;
+      newTokens = (totalAmount * 0.1) + tokens;
     }
 
     const updateTokenURL = `https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/update?phoneNumber=${phoneNumber}&token=${newTokens}`;
 
+    // Update tokens before placing the order
     try {
       const updateResponse = await fetch(updateTokenURL, {
         method: "PUT",
