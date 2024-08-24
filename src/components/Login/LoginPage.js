@@ -1,4 +1,3 @@
-// src/pages/LoginPage.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
@@ -8,6 +7,7 @@ const LoginPage = () => {
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   localStorage.clear();
@@ -27,13 +27,14 @@ const LoginPage = () => {
       return;
     }
 
+    setIsLoading(true);
+
     // Special condition for Admin login
     if (name === "Admin" && phoneNumber === "9898989898") {
-      navigate("/orders"); // Assuming "/orders" is the route for the orders page
+      navigate("/orders");
       return;
     }
 
-    // Make a POST request with the provided data
     try {
       const response = await fetch(
         "https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/createUser",
@@ -56,16 +57,16 @@ const LoginPage = () => {
         localStorage.setItem("userId", userId);
         localStorage.setItem("phoneNumber", phoneNumber);
 
-        // Redirect to the menu page if the response status is created
         navigate("/menu");
       } else {
-        // Handle other response statuses
         console.error("Login failed:", response.statusText);
         setError("Login failed: " + response.statusText);
       }
     } catch (error) {
       console.error("Error during login:", error);
       setError("Error during login. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -74,7 +75,7 @@ const LoginPage = () => {
       <SimpleNavbar />
       <div className="background">
         <div className="login-container">
-          <h1 className="App">Welcome to Seven Shawarma</h1>
+          <h1 className="App">Welcome to<br></br> The Shawarma Hub</h1>
           <br />
           <h3>Please Login Here</h3>
           {error && <div className="alert alert-danger">{error}</div>}
@@ -92,7 +93,7 @@ const LoginPage = () => {
                 value={name}
                 onChange={(e) => {
                   setName(e.target.value);
-                  setError(""); // Clear the error when the name is modified
+                  setError(""); 
                 }}
                 aria-required="true"
               />
@@ -107,7 +108,7 @@ const LoginPage = () => {
                 value={phoneNumber}
                 onChange={(e) => {
                   setPhoneNumber(e.target.value);
-                  setError(""); // Clear the error when the phone number is modified
+                  setError(""); 
                 }}
                 aria-required="true"
               />
@@ -119,6 +120,28 @@ const LoginPage = () => {
           </form>
         </div>
       </div>
+
+      {isLoading && (
+        <div className="popup">
+          <div className="popup-inner">
+            <h2>Please wait a moment...</h2>
+            <div className="loader">
+              <div className="bar1"></div>
+              <div className="bar2"></div>
+              <div className="bar3"></div>
+              <div className="bar4"></div>
+              <div className="bar5"></div>
+              <div className="bar6"></div>
+              <div className="bar7"></div>
+              <div className="bar8"></div>
+              <div className="bar9"></div>
+              <div className="bar10"></div>
+              <div className="bar11"></div>
+              <div className="bar12"></div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
