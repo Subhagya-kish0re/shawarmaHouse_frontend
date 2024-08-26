@@ -71,16 +71,19 @@ const Cart = () => {
     );
 
     let finalAmount = totalAmount;
-    let newTokens = 0;
+    let calculatedTokens = 0;
 
     if (useTokens && tokens > 0) {
       finalAmount -= tokens;
-      newTokens = (finalAmount * 0.1);
+      calculatedTokens = finalAmount * 0.10;
     } else {
-      newTokens = (totalAmount * 0.1) + tokens;
+      calculatedTokens = totalAmount * 0.10 + tokens;
     }
 
-    const updateTokenURL = `https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/update?phoneNumber=${phoneNumber}&token=${newTokens}`;
+    // Round calculatedTokens to 2 decimal places
+    const roundedTokens = parseFloat(calculatedTokens.toFixed(2));
+
+    const updateTokenURL = `https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/update?phoneNumber=${phoneNumber}&token=${roundedTokens}`;
 
     // Update tokens before placing the order
     try {
@@ -110,7 +113,7 @@ const Cart = () => {
       phoneNumber,
       itemsWithQuantity,
       totalAmount: finalAmount,
-      tokens: newTokens,
+      tokens: roundedTokens,
     };
 
     try {
@@ -161,6 +164,7 @@ const Cart = () => {
             <div className="cart-summary">
               <h3>Total Amount: ₹ {totalAmount}</h3>
               <h4>Available Tokens: {tokens}</h4>
+              {/* {useTokens && <h4>New Tokens: {newTokens}</h4>} */}
               <Form.Check
                 type="checkbox"
                 label="Use Tokens"
