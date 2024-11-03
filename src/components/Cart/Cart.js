@@ -47,11 +47,11 @@ const Cart = () => {
 
   const handleUseTokensChange = () => {
     setUseTokens(!useTokens);
-    if (!useTokens) {
-      setTotalAmount((prevTotal) => prevTotal - tokens);
-    } else {
-      setTotalAmount((prevTotal) => prevTotal + tokens);
-    }
+    // if (!useTokens) {
+    //   setTotalAmount((prevTotal) => prevTotal - tokens);
+    // } else {
+    //   setTotalAmount((prevTotal) => prevTotal + tokens);
+    // }
   };
 
   const backToMenu = () => {
@@ -63,85 +63,85 @@ const Cart = () => {
     const userName = localStorage.getItem("username");
     const phoneNumber = localStorage.getItem("phoneNumber");
     const itemsWithQuantity = Object.entries(cartItems).reduce(
-      (acc, [name, { price, quantity }]) => {
-        acc[name] = quantity;
-        return acc;
-      },
-      {}
+        (acc, [name, { price, quantity }]) => {
+            acc[name] = quantity;
+            return acc;
+        },
+        {}
     );
 
     let finalAmount = totalAmount;
     let calculatedTokens = 0;
 
-    if (useTokens && tokens > 0) {
-      finalAmount -= tokens;
-      calculatedTokens = finalAmount * 0.10;
-    } else {
-      calculatedTokens = totalAmount * 0.10 + tokens;
-    }
 
     // Round calculatedTokens to 2 decimal places
     const roundedTokens = parseFloat(calculatedTokens.toFixed(2));
 
-    const updateTokenURL = `https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/update?phoneNumber=${phoneNumber}&token=${roundedTokens}`;
-
     // Update tokens before placing the order
-    try {
-      const updateResponse = await fetch(updateTokenURL, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!updateResponse.ok) {
-        console.error("Failed to update tokens:", updateResponse.statusText);
-        setError("Failed to update tokens: " + updateResponse.statusText);
-        return;
-      } else {
-        console.log("Tokens updated successfully");
-      }
-    } catch (updateError) {
-      console.error("Error updating tokens:", updateError);
-      setError("Error updating tokens. Please try again.");
-      return;
-    }
-
-    const requestBody = {
-      userId,
-      userName,
-      phoneNumber,
-      itemsWithQuantity,
-      totalAmount: finalAmount,
-      tokens: roundedTokens,
+    const updateTokenRequestBody = {
+        phoneNumber: phoneNumber,
+        totalAmount: finalAmount,
+        useTokens: useTokens // This will be true if the checkbox is checked, otherwise false
     };
 
     try {
-      const response = await fetch(
-        "https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/createOrder",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestBody),
-        }
-      );
+        const updateResponse = await fetch("https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/update", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updateTokenRequestBody),
+        });
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Order placed successfully:", data);
-        localStorage.setItem("orderResponse", JSON.stringify(data));
-        navigate("/orderplaced", { state: { orderDetails: data } });
-      } else {
-        console.error("Failed to place order:", response.statusText);
-        setError("Failed to place order: " + response.statusText);
-      }
-    } catch (error) {
-      console.error("Error placing order:", error);
-      setError("Error placing order. Please try again.");
+        if (!updateResponse.ok) {
+            console.error("Failed to update tokens:", updateResponse.statusText);
+            setError("Failed to update tokens: " + updateResponse.statusText);
+            return;
+        } else {
+            console.log("Tokens updated successfully");
+            localStorage.removeItem("cartItems");
+        }
+    } catch (updateError) {
+        console.error("Error updating tokens:", updateError);
+        setError("Error updating tokens. Please try again.");
+        return;
     }
-  };
+
+    const requestBody = {
+        userId,
+        userName,
+        phoneNumber,
+        itemsWithQuantity,
+        totalAmount: finalAmount,
+        tokens: roundedTokens,
+    };
+
+    try {
+        const response = await fetch(
+            "https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/createOrder",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(requestBody),
+            }
+        );
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log("Order placed successfully:", data);
+            localStorage.setItem("orderResponse", JSON.stringify(data));
+            navigate("/orderplaced", { state: { orderDetails: data } });
+        } else {
+            console.error("Failed to place order:", response.statusText);
+            setError("Failed to place order: " + response.statusText);
+        }
+    } catch (error) {
+        console.error("Error placing order:", error);
+        setError("Error placing order. Please try again.");
+    }
+};
 
   return (
     <div>
