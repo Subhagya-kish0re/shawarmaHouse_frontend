@@ -101,12 +101,12 @@ const OrdersPage = () => {
           <table>
             <thead>
               <tr>
-                <th>Order ID</th>
-                <th>User ID</th>
+              <th>Order ID</th>
                 <th>User Name</th>
                 <th>Phone Number</th>
                 <th>Order Date</th>
                 <th>Status</th>
+                <th>Items with Quantity</th>
                 <th>Total Amount</th>
                 <th>Actions</th>
               </tr>
@@ -114,23 +114,29 @@ const OrdersPage = () => {
             <tbody>
               {orders.map((order) => (
                 <tr key={order.id}>
-                  <td>{order.id}</td>
-                  <td>{order.userId}</td>
-                  <td>{order.userName}</td>
-                  <td>{order.phoneNumber}</td>
-                  <td>{new Date(order.orderDate).toLocaleString()}</td>
-                  <td>{order.status}</td>
-                  <td>{order.totalAmount}</td>
-                  <td>
-                    <select
-                      value={selectedStatus[order.id] || ""}
-                      onChange={(e) =>
-                        setSelectedStatus({
-                          ...selectedStatus,
-                          [order.id]: e.target.value,
-                        })
-                      }
-                    >
+                <td>{order.id}</td>
+                <td>{order.userName}</td>
+                <td>{order.phoneNumber}</td>
+                <td>{new Date(order.orderDate).toLocaleString()}</td>
+                <td>{order.status}</td>
+                <td>
+                  {Object.entries(order.itemsWithQuantity).map(([item, quantity]) => (
+                    <div key={item}>
+                      {item}: {quantity}
+                    </div>
+                  ))}
+                </td>
+                <td>{order.totalAmount}</td>
+                <td>
+                  <select
+                    value={selectedStatus[order.id] || ""}
+                    onChange={(e) =>
+                      setSelectedStatus({
+                        ...selectedStatus,
+                        [order.id]: e.target.value,
+                      })
+                    }
+                  >
                       <option value="">Select Status</option>
                       <option value="READY">Ready</option>
                       <option value="DELIVERED">Delivered</option>

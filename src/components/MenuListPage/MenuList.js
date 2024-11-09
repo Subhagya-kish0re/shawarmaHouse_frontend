@@ -22,22 +22,19 @@ const MenuList = () => {
         const data = await response.json();
 
         // Define the specific order for categories
-        // const categoryOrder = ["Meal", "Moctail", "Sandwich", "Shawarma"];
-        const categoryOrder = ["Shawarma", "Moctail", "Sandwich", "Meal"];
-        // const categoryOrder = ["Meal", "Sandwich"];
+        const categoryOrder = ["Shawarma", "Mocktail", "Sandwich", "Meal"];
 
         // Custom sorting function
         const sortByCategoryOrder = (a, b) => {
-          const indexA = categoryOrder.indexOf(a.category.toUpperCase());
-          const indexB = categoryOrder.indexOf(b.category.toUpperCase());
+          const indexA = categoryOrder.indexOf(a.category);
+          const indexB = categoryOrder.indexOf(b.category);
           if (indexA === -1) return 1; // If category not found, sort it to the end
           if (indexB === -1) return -1; // If category not found, sort it to the end
           return indexA - indexB;
         };
 
-        // Sort menu items by the specified category order
+        // Sort and set menu items
         const sortedMenuItems = data.sort(sortByCategoryOrder);
-
         setMenuItems(sortedMenuItems);
       } catch (error) {
         console.error("Error fetching menu items:", error);
@@ -108,37 +105,30 @@ const MenuList = () => {
     });
   };
 
+  // Function to group items by category
+  const categorizeItems = (items) => {
+    return items.reduce((acc, item) => {
+      if (!acc[item.category]) {
+        acc[item.category] = []; // Initialize an empty array for new categories
+      }
+      acc[item.category].push(item );
+      return acc;
+    }, {});
+  };
+
+  const categorizedItems = categorizeItems(menuItems);
+
   return (
-<div>
+    <div>
       <FixedNavbar />
 
       <div className="bg">
-        <h1 className="App" >Menu Items</h1>
+        <h1 className="App">Menu Items</h1>
         <div className="menu-container">
-          {menuItems.map((item, index) => {
-            if (index === 0 || menuItems[index - 1].category !== item.category) {
-              return (
-                <div key={item.category}>
-                  <h2>{item.category}</h2>
-                  <div key={item.item_id} className="menu-item">
-                    <div>
-                      <strong>{item.name}</strong> - ₹ {item.price}
-                      <p>{item.description}</p>
-                    </div>
-                    <div className="quantity-controls">
-                      <button onClick={() => handleRemoveFromCart(item.name)} style={{ marginRight: "5px" }}>
-                        -
-                      </button>
-                      {quantities[item.name]?.quantity || 0}
-                      <button onClick={() => handleAddToCart(item.name, item.price)} style={{ marginLeft: "5px" }}>
-                        +
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              );
-            } else {
-              return (
+          {Object.keys(categorizedItems).map((category) => (
+            <div key={category}>
+              <h2>{category}</h2>
+              {categorizedItems[category].map((item) => (
                 <div key={item.item_id} className="menu-item">
                   <div>
                     <strong>{item.name}</strong> - ₹ {item.price}
@@ -154,9 +144,9 @@ const MenuList = () => {
                     </button>
                   </div>
                 </div>
-              );
-            }
-          })}
+              ))}
+            </div>
+          ))}
         </div>
 
         <div className="App">
