@@ -10,7 +10,7 @@ const OrderHistory = () => {
 
   useEffect(() => {
     if (phoneNumber) {
-      fetch(`https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/byphonenumber/${phoneNumber}`)
+      fetch(`http://ec2-13-203-76-122.ap-south-1.compute.amazonaws.com:8080/shawarmahouse/v1/byphonenumber/${phoneNumber}`)
         .then((response) => response.json())
         .then((data) => {
           setOrders(data);
