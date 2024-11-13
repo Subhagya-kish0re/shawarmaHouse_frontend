@@ -15,7 +15,7 @@ const OrderDetails = () => {
 
     const phoneNumber = localStorage.getItem("phoneNumber");
     if (phoneNumber) {
-      fetch(`http://ec2-13-203-76-122.ap-south-1.compute.amazonaws.com:8080/shawarmahouse/v1/gettokens?phoneNumber=${phoneNumber}`)
+      fetch(`https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/gettokens?phoneNumber=${phoneNumber}`)
         .then((response) => response.json())
         .then((data) => {
           console.log("Fetched tokens:", data);

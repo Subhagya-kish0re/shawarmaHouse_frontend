@@ -17,7 +17,7 @@ const MenuList = () => {
     const fetchMenuItems = async () => {
       try {
         const response = await fetch(
-          "http://ec2-13-203-76-122.ap-south-1.compute.amazonaws.com:8080/shawarmahouse/v1/getAllMenuItems"
+          "https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/getAllMenuItems"
         );
         const data = await response.json();
 
