@@ -37,7 +37,7 @@ const LoginPage = () => {
 
     try {
       const response = await fetch(
-        "https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/createUser",
+        "http://ec2-13-203-76-122.ap-south-1.compute.amazonaws.com:8080/shawarmahouse/v1/createUser",
         {
           method: "POST",
           headers: {

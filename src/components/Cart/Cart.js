@@ -29,7 +29,7 @@ const Cart = () => {
     setTotalAmount(total);
 
     const phoneNumber = localStorage.getItem("phoneNumber");
-    fetch(`https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/gettokens?phoneNumber=${phoneNumber}`)
+    fetch(`http://ec2-13-203-76-122.ap-south-1.compute.amazonaws.com:8080/shawarmahouse/v1/gettokens?phoneNumber=${phoneNumber}`)
       .then((response) => response.json())
       .then((data) => {
         console.log("Fetched tokens:", data);
@@ -85,7 +85,7 @@ const Cart = () => {
     };
 
     try {
-        const updateResponse = await fetch("https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/update", {
+        const updateResponse = await fetch("http://ec2-13-203-76-122.ap-south-1.compute.amazonaws.com:8080/shawarmahouse/v1/update", {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -118,7 +118,7 @@ const Cart = () => {
 
     try {
         const response = await fetch(
-            "https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/createOrder",
+            "http://ec2-13-203-76-122.ap-south-1.compute.amazonaws.com:8080/shawarmahouse/v1/createOrder",
             {
                 method: "POST",
                 headers: {

@@ -12,7 +12,7 @@ const OrdersPage = () => {
   const fetchOrders = async () => {
     try {
       const response = await fetch(
-        "https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/status"
+        "http://ec2-13-203-76-122.ap-south-1.compute.amazonaws.com:8080/shawarmahouse/v1/status"
       );
       if (!response.ok) {
         throw new Error("Failed to fetch orders");
@@ -46,7 +46,7 @@ const OrdersPage = () => {
 
     try {
       const response = await fetch(
-        "https://shawarmahouse-backend-6ax5.onrender.com/shawarmahouse/v1/updateOrderStatus",
+        "http://ec2-13-203-76-122.ap-south-1.compute.amazonaws.com:8080/shawarmahouse/v1/updateOrderStatus",
         requestOptions
       );
       if (!response.ok) {
