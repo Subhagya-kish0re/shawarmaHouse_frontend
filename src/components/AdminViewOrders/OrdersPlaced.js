@@ -12,7 +12,7 @@ const OrdersPage = () => {
   const fetchOrders = async () => {
     try {
       const response = await fetch(
-        "http://ec2-13-203-76-122.ap-south-1.compute.amazonaws.com:8080/shawarmahouse/v1/status"
+        "http://ec2-13-126-9-144.ap-south-1.compute.amazonaws.com:8080/shawarmahouse/v1/status"
       );
       if (!response.ok) {
         throw new Error("Failed to fetch orders");
@@ -46,7 +46,7 @@ const OrdersPage = () => {
 
     try {
       const response = await fetch(
-        "http://ec2-13-203-76-122.ap-south-1.compute.amazonaws.com:8080/shawarmahouse/v1/updateOrderStatus",
+        "http://ec2-13-126-9-144.ap-south-1.compute.amazonaws.com:8080/shawarmahouse/v1/updateOrderStatus",
         requestOptions
       );
       if (!response.ok) {
@@ -65,7 +65,7 @@ const OrdersPage = () => {
   const removeOrder = async (orderId) => {
     try {
       const response = await fetch(
-        `http://ec2-13-203-76-122.ap-south-1.compute.amazonaws.com:8080/shawarmahouse/v1/removeOrder/${orderId}`,
+        `http://ec2-13-126-9-144.ap-south-1.compute.amazonaws.com:8080/shawarmahouse/v1/removeOrder/${orderId}`,
         {
           method: "DELETE",
         }

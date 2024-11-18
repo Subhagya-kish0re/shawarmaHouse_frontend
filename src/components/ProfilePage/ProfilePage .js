@@ -15,7 +15,7 @@ const ProfilePage = () => {
       useEffect(() => {
         const phoneNumber = localStorage.getItem("phoneNumber");
         if (phoneNumber) {
-          fetch(`http://ec2-13-203-76-122.ap-south-1.compute.amazonaws.com:8080/shawarmahouse/v1/findbynumber?number=${phoneNumber}`)
+          fetch(`http://ec2-13-126-9-144.ap-south-1.compute.amazonaws.com:8080/shawarmahouse/v1/findbynumber?number=${phoneNumber}`)
             .then((response) => response.json())
             .then((data) => {
               setUserDetails({
@@ -38,7 +38,7 @@ const ProfilePage = () => {
       const handleSave = () => {
         const { name, phone } = userDetails;
     
-        fetch(`http://ec2-13-203-76-122.ap-south-1.compute.amazonaws.com:8080/shawarmahouse/v1/updateName?username=${name}&phoneNumber=${phone}`, {
+        fetch(`http://ec2-13-126-9-144.ap-south-1.compute.amazonaws.com:8080/shawarmahouse/v1/updateName?username=${name}&phoneNumber=${phone}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
