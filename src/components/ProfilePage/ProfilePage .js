@@ -15,7 +15,7 @@ const ProfilePage = () => {
       useEffect(() => {
         const phoneNumber = localStorage.getItem("phoneNumber");
         if (phoneNumber) {
-          fetch(`http://ec2-13-203-79-186.ap-south-1.compute.amazonaws.com:8080/shawarmahouse/v1/findbynumber?number=${phoneNumber}`)
+          fetch(`http://ec2-13-201-203-2.ap-south-1.compute.amazonaws.com:8080/shawarmahouse/v1/findbynumber?number=${phoneNumber}`)
             .then((response) => response.json())
             .then((data) => {
               setUserDetails({
